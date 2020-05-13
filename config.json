@@ -1,17 +1,18 @@
 {
   "server": {
     "request_timeout": 10,
-    "daemon": true,
+    "daemon": false,
     "loop_debug": false,
     "handler": {
       "*": [
+        "upload.urls",
         "core.urls"
       ]
     }
   },
   "http": {
     "host": "",
-    "port": 80,
+    "port": 8086,
     "is_enable": true,
     "rewrite_only": false
   },
