@@ -9,6 +9,14 @@ var file_path = 'static/';
 	xmlhttp.onreadystatechange=function(){
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			document.getElementById("div1").innerHTML=xmlhttp.responseText;
+			var jqJsonOBJ = $.parseJSON(xmlhttp.responseText)
+			if (jqJsonOBJ.error == true){
+				alert("REQUESTING PATH ERROR")
+			}
+			else {//this branch displays the file list
+				
+			};
+			
 		}
 		else if (xmlhttp.readyState==3 || xmlhttp.readyState==2 || xmlhttp.readyState==1 || xmlhttp.readyState==0){
 			//pass
