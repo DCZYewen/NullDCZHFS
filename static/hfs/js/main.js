@@ -1,24 +1,49 @@
 var page_host = window.location.host;
 var protocol = window.location.protocol;
 var page_url = window.location.href;
-var file_path = 'static/';
+var arguments = window.location.search;
+if (arguments.length == 0 || length == 7){
+	var file_path = 'static/';
+	var indexFlag = true;
+	console.log(indexFlag)
+}
+else{
+	var arr = arguments.split("=")
+	file_path = 'static/' + arr[1] ;
+	indexFlag = false;
+	console.log(indexFlag)
+}
 
- function get_file_list(){
+function get_file_list(){
 	xmlhttp=new XMLHttpRequest();
-	xmlhttp.open("GET", "/ajax/getInfo?path=" + file_path ,true);
+	var url = "/ajax/getInfo?path=" + file_path;
+	console.log(url);
+	xmlhttp.open("GET", url ,true);
 	xmlhttp.send();
 	xmlhttp.onreadystatechange=function(){
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 			var jqJsonOBJ = $.parseJSON(xmlhttp.responseText)
 			if (jqJsonOBJ.error == true){
-				alert("REQUESTING PATH ERROR")
+				console.log(jqJsonOBJ);
+				alert("REQUESTING PATH ERROR");
 			}
 			else {//this branch displays the file list
+				if (indexFlag == false){
+					var lastPath = {
+						"typ" : "dir",
+						"name" : "../"
+					}
+					var thow = pushRow(lastPath);
+					$("#tbMain").append(thow);
+				}
+				else{
+					//pass
+				}
 				for (var n in jqJsonOBJ.data){
 					console.log(jqJsonOBJ.data[n]);
 					
 					var thow = pushRow(jqJsonOBJ.data[n]);
-					$("tbody").append(thow);
+					$("#tbMain").append(thow);
 				}
 			};
 			
@@ -92,5 +117,14 @@ function makeDown(name){
 }
 
 function makePath(name){
-	return "<a href='" + page_url + '?path=' + name + "/'>" + name + '</a>';
+	if (indexFlag){
+		var htmlOBJ = "<a href='" + page_url + '?path=' + name + "/' " +  'οnclick="flush()" '+ '>' + name + '</a>';
+	}
+	else{
+		var htmlOBJ = "<a href='" + page_url + name + "/' " +  'οnclick="flush()" '+ '>' + name + '</a>';
+	}
+	return htmlOBJ;
+}
+
+function flush(){
 }
