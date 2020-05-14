@@ -1,7 +1,7 @@
 {
   "server": {
     "request_timeout": 10,
-    "daemon": false,
+    "daemon": true,
     "loop_debug": false,
     "handler": {
       "*": [
@@ -12,7 +12,7 @@
   },
   "http": {
     "host": "",
-    "port": 8086,
+    "port": 80,
     "is_enable": true,
     "rewrite_only": false
   },
